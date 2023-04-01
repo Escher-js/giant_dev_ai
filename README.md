@@ -27,8 +27,169 @@ The following features are planned:
 
 4. Proposal Management: Users will be able to propose new ideas or modifications to existing tasks. Proposals will be reviewed by the project manager, and if approved, the contributor will receive recognition in their own research portfolio.
 
-5. Portfolio Management: Users will be able to view their own research portfolio, which includes contributions they have made
+5. Portfolio Management: Users will be able to view their own research portfolio, which includes contributions they have made to research projects, and recognition they have received for their contributions.
 
+## User Interface
+
+The following wireframes illustrate the proposed user interface:
+
+![Wireframes](./wireframes.png)
+
+## API Specification
+
+The following API endpoints will be implemented:
+
+1. `POST /api/users/register`: Creates a new user account.
+
+2. `POST /api/users/login`: Logs in a user.
+
+3. `GET /api/users/logout`: Logs out a user.
+
+4. `POST /api/projects`: Creates a new research project.
+
+5. `GET /api/projects/:projectId`: Retrieves a research project by ID.
+
+6. `PUT /api/projects/:projectId`: Updates a research project.
+
+7. `DELETE /api/projects/:projectId`: Deletes a research project.
+
+8. `POST /api/tasks`: Creates a new task.
+
+9. `GET /api/tasks/:taskId`: Retrieves a task by ID.
+
+10. `PUT /api/tasks/:taskId`: Updates a task.
+
+11. `DELETE /api/tasks/:taskId`: Deletes a task.
+
+12. `POST /api/proposals`: Creates a new proposal.
+
+13. `GET /api/proposals/:proposalId`: Retrieves a proposal by ID.
+
+14. `PUT /api/proposals/:proposalId`: Updates a proposal.
+
+15. `DELETE /api/proposals/:proposalId`: Deletes a proposal.
+
+16. `GET /api/portfolio/:userId`: Retrieves a user's research portfolio.
+
+## Database Schema
+
+The following MongoDB collections will be used:
+
+1. `users`: Stores user account information.
+
+  {
+_id: ObjectId,
+username: String,
+password: String,
+portfolio: [ObjectId] // Array of portfolio items
+}
+
+
+2. `projects`: Stores research project information.
+
+{
+_id: ObjectId,
+name: String,
+description: String,
+team: [ObjectId] // Array of user IDs
+}
+
+
+3. `tasks`: Stores research task information.
+
+{
+_id: ObjectId,
+project: ObjectId, // ID of parent project
+name: String,
+description: String,
+status: String, // One of "todo", "in_progress", "done"
+assignee: ObjectId, // ID of assigned user
+proposals: [ObjectId] // Array of
+
+# 研究課題管理アプリケーション DesignDoc
+## 概要
+研究課題のレポジトリごとにバックログを仮説の形で積み上げて研究過程を整理し、実証結果やデータ、仮説の改善点、再実験の結果などを管理するWebアプリケーションを構築する。
+
+研究者同士がより手軽に共同研究を行えるようにすることを目的とし、提案と受け入れはGitHubのプルリクエストとマージのような形式で行う。
+
+## 技術スタック
+- フロントエンド: React
+- バックエンド: Node.js
+- データベース: MongoDB
+## 機能要件
+### 課題の作成・編集
+課題は仮説の形で作成できる
+課題にはタイトル、詳細、状態、優先度などを設定できる
+課題にはファイルの添付が可能
+課題を削除することができる
+課題の状態を変更できる
+### コメント
+課題に対してコメントを追加できる
+コメントにはファイルの添付が可能
+コメントを削除することができる
+### プルリクエスト
+課題に対してプルリクエストを送信できる
+プルリクエストにはタイトル、説明、変更内容、テスト結果などを設定できる
+プルリクエストに対してコメントを追加できる
+プルリクエストを削除することができる
+プルリクエストをマージすることができる
+### ユーザー管理
+ユーザーの登録・ログインができる
+ユーザー情報の編集ができる
+ユーザーの一覧を表示できる
+管理者ユーザーはユーザーの承認・拒否ができる
+## データベース設計
+### 課題
+フィールド名	データ型
+_id	ObjectId
+title	string
+description	string
+status	string
+priority	string
+attachments	array
+created_at	date
+updated_at	date
+
+## バックエンドのAPI
+### ログイン
+- ユーザー名とパスワードでログインできる
+- OAuth2.0を用いたソーシャルログインにも対応する
+- JWTトークンを発行し、セッション管理を行う
+### レポジトリ操作
+- レポジトリの作成、編集、削除ができる
+- レポジトリごとにコントリビューターを設定できる
+- レポジトリごとにバックログを作成できる
+### バックログ操作
+バックログの作成、編集、削除ができる
+バックログに対してコメントを追加できる
+バックログのステータスを変更できる
+
+### プルリクエスト操作
+- プルリクエストの作成、編集、削除ができる
+- プルリクエストに対してコメントを追加できる
+- プルリクエストのマージができる
+- マージ時には、コンフリクトの解消を行う
+### ユーザー管理
+- ユーザー情報の取得、作成、更新、削除ができる
+- ユーザーごとに所属しているレポジトリやコントリビューションを確認できる
+- パスワードの変更やプロフィール画像のアップロードもできる
+## フロントエンドの機能
+### ログイン画面
+- ユーザー名とパスワードを入力してログインできる
+- ソーシャルログインにも対応する
+### レポジトリ一覧画面
+- 所属しているレポジトリの一覧を表示する
+- レポジトリの作成ができる
+### レポジトリ詳細画面
+- レポジトリの詳細情報とバックログ一覧を表示する
+- バックログの作成や編集、ステータスの変更ができる
+- コントリビューターを設定できる
+### バックログ詳細画面
+- バックログの詳細情報とコメント一覧を表示する
+- コメントの追加や編集、ステータスの変更ができる
+## プルリクエスト詳細画面
+- プルリクエストの詳細情報とコメント一覧を表示する
+- コメントの追加や編集、マージができる
 
 
 
