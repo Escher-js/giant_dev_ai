@@ -62,6 +62,8 @@ updated_at	date
 - 履歴書には研究者のプロフィール情報も表示される
 
 
+## クラスダイアグラム
+```mermaid
 classDiagram
     class User {
         + string id
@@ -100,3 +102,5 @@ classDiagram
     User "1" --> "*" Contribution : approves
     Repository "1" --> "*" Hypothesis : contains
     Hypothesis "1" --> "*" Contribution : contains
+}
+```
