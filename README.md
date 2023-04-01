@@ -60,3 +60,43 @@ updated_at	date
 - コントリビューションポイントがあるバックログを提出した研究者は、そのポイントが履歴書に反映される
 - 履歴書には研究者が提出したバックログの一覧やコントリビューションポイントが表示される
 - 履歴書には研究者のプロフィール情報も表示される
+
+
+classDiagram
+    class User {
+        + string id
+        + string name
+        + string email
+    }
+
+    class Repository {
+        + string id
+        + string name
+        + string description
+        + User owner
+    }
+
+    class Hypothesis {
+        + string id
+        + string title
+        + string description
+        + string status
+        + User creator
+        + User approver
+        + Repository repository
+    }
+
+    class Contribution {
+        + string id
+        + string description
+        + User creator
+        + User approver
+        + Hypothesis hypothesis
+    }
+
+    User "1" --> "*" Repository : owns
+    User "1" --> "*" Hypothesis : creates
+    User "1" --> "*" Contribution : creates
+    User "1" --> "*" Contribution : approves
+    Repository "1" --> "*" Hypothesis : contains
+    Hypothesis "1" --> "*" Contribution : contains
