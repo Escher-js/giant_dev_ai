@@ -102,5 +102,4 @@ classDiagram
     User "1" --> "*" Contribution : approves
     Repository "1" --> "*" Hypothesis : contains
     Hypothesis "1" --> "*" Contribution : contains
-}
 ```
