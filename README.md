@@ -105,6 +105,7 @@ classDiagram
     Hypothesis "1" --> "*" Contribution : contains
 ```
 
+## シーケンスダイアグラム
 ```mermaid
 sequenceDiagram
     participant User
@@ -122,6 +123,5 @@ sequenceDiagram
     User ->> Hypothesis: Approve Contribution
     Hypothesis ->> Contribution: Update Status
     Contribution ->> User: Notify of Approval
-
 ```
 
