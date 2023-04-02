@@ -32,15 +32,16 @@
 - 管理者ユーザーはユーザーの承認・拒否ができる
 ## データベース設計
 ### 課題
-フィールド名	データ型
-_id	ObjectId
-title	string
-description	string
-status	string
-priority	string
-attachments	array
-created_at	date
-updated_at	date
+|フィールド名|データ型|
+|----|----|
+|_id	|ObjectId|
+|title	|string|
+|description	|string|
+|status	|string|
+|priority	|string|
+|attachments	|array|
+|created_at	|date|
+|updated_at	|date|
 ### ユーザー認証・認可
 - ユーザー認証はJWTを用いた認証を採用する
 - ユーザー認証が必要なAPIに対しては認可を行う
