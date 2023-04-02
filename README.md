@@ -104,3 +104,24 @@ classDiagram
     Repository "1" --> "*" Hypothesis : contains
     Hypothesis "1" --> "*" Contribution : contains
 ```
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Repository
+    participant Hypothesis
+    participant Contribution
+
+    User ->> Hypothesis: Create Hypothesis
+    Hypothesis ->> Repository: Add to Repository
+    User ->> Contribution: Create Contribution
+    Contribution ->> Hypothesis: Add to Hypothesis
+    User ->> Contribution: Request Approval
+    Contribution ->> Hypothesis: Update Status
+    Hypothesis ->> User: Notify of Contribution Request
+    User ->> Hypothesis: Approve Contribution
+    Hypothesis ->> Contribution: Update Status
+    Contribution ->> User: Notify of Approval
+
+```
+
