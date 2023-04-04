@@ -138,7 +138,6 @@ sequenceDiagram
 ```
 
 2. コントリビューターがバックログを追加する場合
-
 ```mermaid
 sequenceDiagram
     participant Contributor
@@ -148,8 +147,8 @@ sequenceDiagram
     participant RepositoryRepository
     participant UserRepository
 
-    Contributor->>+BacklogController: バックログ作成リクエスト
-    BacklogController->>+BacklogService: バックログ作成リクエスト
+    Contributor->>+BacklogController: RequestBacklogCreation
+    BacklogController->>+BacklogService: RequestBacklogCreation
     BacklogService->>+BacklogRepository:
 ```
 
