@@ -120,30 +120,48 @@ classDiagram
 ## シーケンス図
 ```mermaid
 sequenceDiagram
-  participant User
-  participant Application
-  participant Database
+participant User
+participant Frontend
+participant Backend
+participant Database
 
-  User->>+Application: レポジトリ作成要求
-  Application->>-Database: レポジトリ情報の保存
-  Application->>+User: レポジトリ作成完了通知
-  
-  User->>+Application: 仮説の作成要求
-  Application->>-Database: 仮説情報の保存
-  Application->>+User: 仮説の作成完了通知
+User->>Frontend: Access web application
+Frontend->>Backend: Send API request for repository creation
+Backend-->>Database: Create new repository document
+Database-->>Backend: Return created repository document
+Backend-->>Frontend: Return created repository data
+Frontend->>User: Display created repository data
+User->>Frontend: Create new hypothesis backlog for a repository
+Frontend->>Backend: Send API request for hypothesis creation
+Backend-->>Database: Create new hypothesis document
+Database-->>Backend: Return created hypothesis document
+Backend-->>Frontend: Return created hypothesis data
+Frontend->>User: Display created hypothesis data
+User->>Frontend: Create new contribution proposal for a hypothesis
+Frontend->>Backend: Send API request for contribution creation
+Backend-->>Database: Create new contribution document
+Database-->>Backend: Return created contribution document
+Backend-->>Frontend: Return created contribution data
+Frontend->>User: Display created contribution data
+User->>Frontend: Submit contribution proposal for approval
+Frontend->>Backend: Send API request for contribution submission
+Backend-->>Database: Update contribution document status to "submitted"
+Backend-->>Backend: Notify repository owner of new contribution
+Backend-->>Frontend: Return updated contribution data
+Frontend->>User: Display submitted contribution data
+User->>Frontend: Approve submitted contribution proposal
+Frontend->>Backend: Send API request for contribution approval
+Backend-->>Database: Update contribution document status to "approved"
+Backend-->>Backend: Notify contributor of approved contribution
+Backend-->>Frontend: Return updated contribution data
+Frontend->>User: Display approved contribution data
+User->>Frontend: Merge approved contribution into hypothesis backlog
+Frontend->>Backend: Send API request for contribution merge
+Backend-->>Database: Update hypothesis backlog document with merged contribution
+Backend-->>Backend: Notify all contributors of merged contribution
+Backend-->>Frontend: Return updated hypothesis backlog data
+Frontend->>User: Display updated hypothesis backlog data
 
-  User->>+Application: コントリビューションの提案要求
-  Application->>-Database: コントリビューション情報の保存
-  Application->>+User: コントリビューションの提案完了通知
-
-  User->>+Application: コントリビューションの承認要求
-  Application->>+User: コントリビューションの承認可否の確認
-  Application->>-Database: コントリビューション情報の更新
-  Application->>+User: コントリビューションの承認完了通知
-  User->>+Application: マージ要求
-  Application->>+User: マージ可否の確認
-  Application->>-Database: レポジトリ情報の更新
-  Application->>+User: マージ完了通知
 
 ```
 
