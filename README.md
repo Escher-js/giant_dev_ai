@@ -26,13 +26,16 @@ HypoFlowは、研究者が手軽に共同研究を行うためのWebアプリケ
 classDiagram
     User "1" -- "*" Repository : manages
     User "1" -- "*" Hypothesis : proposes
-    User "1" -- "*" Experiment : conducts
-    User "1" -- "*" Improvement : suggests
-    User "1" -- "*" ReExperiment : conducts
+    User "1" -- "*" HypothesisImprovement : proposes
     Repository "1" -- "*" Hypothesis : contains
-    Hypothesis "1" -- "*" Experiment : has
-    Hypothesis "1" -- "*" Improvement : has
-    Improvement "1" -- "*" ReExperiment : leadsto
+    Hypothesis "1" -- "*" HypothesisImprovement : has
+
+    class HypothesisImprovement {
+        +Experiment: Object
+        +Improvement: Object
+        +ReExperiment: Object
+    }
+
 ```
 
 
@@ -43,18 +46,13 @@ sequenceDiagram
     participant User
     participant Repository
     participant Hypothesis
-    participant Experiment
-    participant Improvement
-    participant ReExperiment
+    participant HypothesisImprovement
 
     User->>Repository: Create / Edit
     User->>Hypothesis: Propose / Edit / Delete
     Repository->>Hypothesis: Contain
-    User->>Experiment: Conduct / Edit / Delete
-    Hypothesis->>Experiment: Have
-    User->>Improvement: Suggest / Edit / Delete
-    Hypothesis->>Improvement: Have
-    User->>ReExperiment: Conduct / Edit / Delete
-    Improvement->>ReExperiment: Lead to
+    User->>HypothesisImprovement: Propose / Edit / Delete
+    Hypothesis->>HypothesisImprovement: Have
+
 ```
 
