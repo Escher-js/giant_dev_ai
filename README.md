@@ -122,6 +122,38 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant User
+    participant App
+    participant Server
+    participant Database
+
+    User->>+App: ログイン
+    App->>+Server: ログイン情報を送信
+    Server->>-Database: ユーザー認証
+    Server-->>-App: 認証済みトークンを返却
+    App-->>-User: トークンを保存
+
+    User->>+App: 新規レポジトリ作成
+    App->>+Server: 新規レポジトリ情報を送信
+    Server->>+Database: 新規レポジトリ作成
+    Database-->>-Server: レポジトリ情報を返却
+    Server-->>-App: レポジトリ情報を返却
+
+    User->>+App: 新規バックログ提案
+    App->>+Server: 新規提案情報を送信
+    Server->>+Database: 新規提案情報を保存
+    Database-->>-Server: 提案情報を返却
+    Server-->>-App: 提案情報を返却
+
+    User->>+App: 提案承認
+    App->>+Server: 承認情報を送信
+    Server->>+Database: 提案情報を更新
+    Database-->>-Server: 更新情報を返却
+    Server-->>-App: 更新情報を返却
+```
+
+```mermaid
+sequenceDiagram
+    participant User
     participant RepositoryController
     participant RepositoryService
     participant RepositoryRepository
