@@ -44,22 +44,37 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant User
-    participant HypoFlow
-    participant Repository
-    participant Hypothesis
-    participant HypothesisImprovement
+    participant Frontend as FE
+    participant Backend as BE
+    participant Database as DB
 
-    User->>HypoFlow: Sign Up / Log In
-    User->>Repository: Search / Browse
-    User->>Repository: Create / Edit
-    User->>Hypothesis: Propose
-    HypoFlow->>Repository: Add Hypothesis
-    User->>HypothesisImprovement: Propose
-    HypoFlow->>Hypothesis: Add HypothesisImprovement
-    User->>HypoFlow: Review HypothesisImprovement
-    HypoFlow->>Hypothesis: Update with approved HypothesisImprovement
-    User->>HypoFlow: Check own contributions and profile
+    User->>FE: Access HypoFlow
+    FE->>BE: Request data (repositories, user info, etc.)
+    BE->>DB: Query data
+    DB-->>BE: Return data
+    BE-->>FE: Respond with data
+    FE->>User: Display data
 
+    User->>FE: Create or update a repository
+    FE->>BE: Send repository data
+    BE->>DB: Insert or update repository
+    DB-->>BE: Confirm operation
+    BE-->>FE: Respond with confirmation
+    FE->>User: Display confirmation
+
+    User->>FE: Propose or update a hypothesis or improvement
+    FE->>BE: Send hypothesis or improvement data
+    BE->>DB: Insert or update hypothesis or improvement
+    DB-->>BE: Confirm operation
+    BE-->>FE: Respond with confirmation
+    FE->>User: Display confirmation
+
+    User->>FE: Review and approve or reject a proposed hypothesis or improvement
+    FE->>BE: Send approval or rejection data
+    BE->>DB: Update hypothesis or improvement status
+    DB-->>BE: Confirm operation
+    BE-->>FE: Respond with confirmation
+    FE->>User: Display confirmation
 
 ```
 
