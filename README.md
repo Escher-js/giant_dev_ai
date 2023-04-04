@@ -44,15 +44,22 @@ classDiagram
 ```mermaid
 sequenceDiagram
     participant User
+    participant HypoFlow
     participant Repository
     participant Hypothesis
     participant HypothesisImprovement
 
+    User->>HypoFlow: Sign Up / Log In
+    User->>Repository: Search / Browse
     User->>Repository: Create / Edit
-    User->>Hypothesis: Propose / Edit / Delete
-    Repository->>Hypothesis: Contain
-    User->>HypothesisImprovement: Propose / Edit / Delete
-    Hypothesis->>HypothesisImprovement: Have
+    User->>Hypothesis: Propose
+    HypoFlow->>Repository: Add Hypothesis
+    User->>HypothesisImprovement: Propose
+    HypoFlow->>Hypothesis: Add HypothesisImprovement
+    User->>HypoFlow: Review HypothesisImprovement
+    HypoFlow->>Hypothesis: Update with approved HypothesisImprovement
+    User->>HypoFlow: Check own contributions and profile
+
 
 ```
 
