@@ -21,6 +21,7 @@ HypoFlowは、研究者が手軽に共同研究を行うためのWebアプリケ
 - データベース: PostgreSQLを使用して、データの一貫性と整合性を確保し、高速なクエリを可能にする。
 
 ドメインモデル図
+
 ```mermaid
 classDiagram
     User "1" -- "*" Repository : manages
@@ -33,3 +34,27 @@ classDiagram
     Hypothesis "1" -- "*" Improvement : has
     Improvement "1" -- "*" ReExperiment : leadsto
 ```
+
+
+シーケンス図
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Repository
+    participant Hypothesis
+    participant Experiment
+    participant Improvement
+    participant ReExperiment
+
+    User->>Repository: Create / Edit
+    User->>Hypothesis: Propose / Edit / Delete
+    Repository->>Hypothesis: Contain
+    User->>Experiment: Conduct / Edit / Delete
+    Hypothesis->>Experiment: Have
+    User->>Improvement: Suggest / Edit / Delete
+    Hypothesis->>Improvement: Have
+    User->>ReExperiment: Conduct / Edit / Delete
+    Improvement->>ReExperiment: Lead to
+```
+
