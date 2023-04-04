@@ -120,34 +120,30 @@ classDiagram
 ## シーケンス図
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Application
-    participant GitHubAPI
-    participant MongoDB
+  participant User
+  participant Application
+  participant Database
 
-    User->>Application: ログイン
-    Application->>User: トップページを表示
-    User->>Application: 新しい研究レポジトリを作成
-    Application->>GitHubAPI: レポジトリの作成
-    GitHubAPI-->>Application: レポジトリの作成完了
-    Application->>MongoDB: 新しいレポジトリのデータを作成
-    MongoDB-->>Application: データ作成完了
-    Application->>User: 新しいレポジトリが作成されました
+  User->>+Application: レポジトリ作成要求
+  Application->>-Database: レポジトリ情報の保存
+  Application->>+User: レポジトリ作成完了通知
+  
+  User->>+Application: 仮説の作成要求
+  Application->>-Database: 仮説情報の保存
+  Application->>+User: 仮説の作成完了通知
 
-    User->>Application: 仮説を追加
-    Application->>MongoDB: 仮説の追加
-    MongoDB-->>Application: 追加完了
-    Application->>User: 仮説が追加されました
+  User->>+Application: コントリビューションの提案要求
+  Application->>-Database: コントリビューション情報の保存
+  Application->>+User: コントリビューションの提案完了通知
 
-    User->>Application: コントリビューションを作成
-    Application->>MongoDB: コントリビューションの追加
-    MongoDB-->>Application: 追加完了
-    Application->>User: コントリビューションが作成されました
-
-    User->>Application: マージをリクエスト
-    Application->>GitHubAPI: マージのリクエスト
-    GitHubAPI-->>Application: マージのリクエスト完了
-    Application->>User: マージがリクエストされました
+  User->>+Application: コントリビューションの承認要求
+  Application->>+User: コントリビューションの承認可否の確認
+  Application->>-Database: コントリビューション情報の更新
+  Application->>+User: コントリビューションの承認完了通知
+  User->>+Application: マージ要求
+  Application->>+User: マージ可否の確認
+  Application->>-Database: レポジトリ情報の更新
+  Application->>+User: マージ完了通知
 
 ```
 
