@@ -19,3 +19,36 @@ HypoFlowは、研究者が手軽に共同研究を行うためのWebアプリケ
 - フロントエンド: React.jsを使用して、モダンで使いやすいインターフェースを実装する。
 - バックエンド: Node.jsを使用して、効率的でスケーラブルなAPIを実装する。
 - データベース: PostgreSQLを使用して、データの一貫性と整合性を確保し、高速なクエリを可能にする。
+
+ドメインモデル図
+```mermaid
+classDiagram
+    User "1" -- "*" Repository : manages
+    User "1" -- "*" Hypothesis : proposes
+    User "1" -- "*" Experiment : conducts
+    User "1" -- "*" Improvement : suggests
+    User "1" -- "*" ReExperiment : conducts
+    Repository "1" -- "*" Hypothesis : contains
+    Hypothesis "1" -- "*" Experiment : has
+    Hypothesis "1" -- "*" Improvement : has
+    Improvement "1" -- "*" ReExperiment : leads to
+
+シーケンス図
+```mermaid
+sequenceDiagram
+    participant User
+    participant Repository
+    participant Hypothesis
+    participant Experiment
+    participant Improvement
+    participant ReExperiment
+
+    User->>Repository: Create / Edit
+    User->>Hypothesis: Propose / Edit / Delete
+    Repository->>Hypothesis: Contain
+    User->>Experiment: Conduct / Edit / Delete
+    Hypothesis->>Experiment: Have
+    User->>Improvement: Suggest / Edit / Delete
+    Hypothesis->>Improvement: Have
+    User->>ReExperiment: Conduct / Edit / Delete
+    Improvement->>ReExperiment: Lead to
