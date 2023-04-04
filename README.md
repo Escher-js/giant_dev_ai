@@ -42,6 +42,121 @@
 |attachments	|array|
 |created_at	|date|
 |updated_at	|date|
+
+
+```mermaid
+classDiagram
+    class User {
+        <<Entity>>
+        -id: string
+        -name: string
+        -email: string
+        -password: string
+        -repositories: Repository[]
+    }
+
+    class Repository {
+        <<Entity>>
+        -id: string
+        -name: string
+        -description: string
+        -contributors: Contributor[]
+        -backlogs: Backlog[]
+        -owner: User
+    }
+
+    class Contributor {
+        <<Entity>>
+        -id: string
+        -name: string
+        -email: string
+        -contribution: number
+        -repository: Repository
+    }
+
+    class Backlog {
+        <<Entity>>
+        -id: string
+        -title: string
+        -description: string
+        -hypotheses: Hypothesis[]
+        -tasks: Task[]
+        -repository: Repository
+    }
+
+    class Hypothesis {
+        <<Entity>>
+        -id: string
+        -description: string
+        -result: Result[]
+        -backlog: Backlog
+    }
+
+    class Result {
+        <<Entity>>
+        -id: string
+        -description: string
+        -data: string
+        -hypothesis: Hypothesis
+    }
+
+    class Task {
+        <<Entity>>
+        -id: string
+        -title: string
+        -description: string
+        -status: string
+        -backlog: Backlog
+    }
+
+    User *-- Repository : has many
+    Repository *-- Contributor : has many
+    Repository *-- Backlog : has many
+    Backlog *-- Hypothesis : has many
+    Hypothesis *-- Result : has many
+    Backlog *-- Task : has many
+```
+
+## シーケンス図
+1. ユーザーがリポジトリを作成する場合
+```mermaid
+sequenceDiagram
+    participant User
+    participant RepositoryController
+    participant RepositoryService
+    participant RepositoryRepository
+    participant UserRepository
+
+    User->>+RepositoryController: リポジトリ作成リクエスト
+    RepositoryController->>+RepositoryService: リポジトリ作成リクエスト
+    RepositoryService->>+RepositoryRepository: リポジトリ作成リクエスト
+    RepositoryRepository->>+UserRepository: リポジトリ作成リクエスト
+    UserRepository->>-RepositoryRepository: リポジトリ作成レスポンス
+    RepositoryRepository->>-RepositoryService: リポジトリ作成レスポンス
+    RepositoryService->>-RepositoryController: リポジトリ作成レスポンス
+    RepositoryController->>-User: リポジトリ作成レスポンス
+```
+
+2. コントリビューターがバックログを追加する場合
+
+```mermaid
+sequenceDiagram
+    participant Contributor
+    participant BacklogController
+    participant BacklogService
+    participant BacklogRepository
+    participant RepositoryRepository
+    participant UserRepository
+
+    Contributor->>+BacklogController: バックログ作成リクエスト
+    BacklogController->>+BacklogService: バックログ作成リクエスト
+    BacklogService->>+BacklogRepository:
+```
+
+
+
+
+
 ### ユーザー認証・認可
 - ユーザー認証はJWTを用いた認証を採用する
 - ユーザー認証が必要なAPIに対しては認可を行う
