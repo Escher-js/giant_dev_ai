@@ -40,9 +40,9 @@ classDiagram
 
 
 シーケンス図
-Frontend as FE
-Backend as BE
-Database as DB
+- Frontend as FE
+- Backend as BE
+- Database as DB
 ```mermaid
 sequenceDiagram
     User->>FE: Access HypoFlow
