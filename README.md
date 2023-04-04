@@ -31,26 +31,5 @@ classDiagram
     Repository "1" -- "*" Hypothesis : contains
     Hypothesis "1" -- "*" Experiment : has
     Hypothesis "1" -- "*" Improvement : has
-    Improvement "1" -- "*" ReExperiment : leads to
-```
-
-シーケンス図
-```mermaid
-sequenceDiagram
-    participant User
-    participant Repository
-    participant Hypothesis
-    participant Experiment
-    participant Improvement
-    participant ReExperiment
-
-    User->>Repository: Create / Edit
-    User->>Hypothesis: Propose / Edit / Delete
-    Repository->>Hypothesis: Contain
-    User->>Experiment: Conduct / Edit / Delete
-    Hypothesis->>Experiment: Have
-    User->>Improvement: Suggest / Edit / Delete
-    Hypothesis->>Improvement: Have
-    User->>ReExperiment: Conduct / Edit / Delete
-    Improvement->>ReExperiment: Lead to
+    Improvement "1" -- "*" ReExperiment : leadsto
 ```
