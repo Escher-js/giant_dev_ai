@@ -43,11 +43,6 @@ classDiagram
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Frontend as FE
-    participant Backend as BE
-    participant Database as DB
-
     User->>FE: Access HypoFlow
     FE->>BE: Request data (repositories, user info, etc.)
     BE->>DB: Query data
