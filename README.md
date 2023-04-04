@@ -118,72 +118,38 @@ classDiagram
 ```
 
 ## シーケンス図
-1. ユーザーがリポジトリを作成する場合
 ```mermaid
 sequenceDiagram
     participant User
-    participant App
-    participant Server
-    participant Database
+    participant Application
+    participant GitHubAPI
+    participant MongoDB
 
-    User->>+App: ログイン
-    App->>+Server: ログイン情報を送信
-    Server->>-Database: ユーザー認証
-    Server-->>-App: 認証済みトークンを返却
-    App-->>-User: トークンを保存
+    User->>Application: ログイン
+    Application->>User: トップページを表示
+    User->>Application: 新しい研究レポジトリを作成
+    Application->>GitHubAPI: レポジトリの作成
+    GitHubAPI-->>Application: レポジトリの作成完了
+    Application->>MongoDB: 新しいレポジトリのデータを作成
+    MongoDB-->>Application: データ作成完了
+    Application->>User: 新しいレポジトリが作成されました
 
-    User->>+App: 新規レポジトリ作成
-    App->>+Server: 新規レポジトリ情報を送信
-    Server->>+Database: 新規レポジトリ作成
-    Database-->>-Server: レポジトリ情報を返却
-    Server-->>-App: レポジトリ情報を返却
+    User->>Application: 仮説を追加
+    Application->>MongoDB: 仮説の追加
+    MongoDB-->>Application: 追加完了
+    Application->>User: 仮説が追加されました
 
-    User->>+App: 新規バックログ提案
-    App->>+Server: 新規提案情報を送信
-    Server->>+Database: 新規提案情報を保存
-    Database-->>-Server: 提案情報を返却
-    Server-->>-App: 提案情報を返却
+    User->>Application: コントリビューションを作成
+    Application->>MongoDB: コントリビューションの追加
+    MongoDB-->>Application: 追加完了
+    Application->>User: コントリビューションが作成されました
 
-    User->>+App: 提案承認
-    App->>+Server: 承認情報を送信
-    Server->>+Database: 提案情報を更新
-    Database-->>-Server: 更新情報を返却
-    Server-->>-App: 更新情報を返却
+    User->>Application: マージをリクエスト
+    Application->>GitHubAPI: マージのリクエスト
+    GitHubAPI-->>Application: マージのリクエスト完了
+    Application->>User: マージがリクエストされました
+
 ```
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant RepositoryController
-    participant RepositoryService
-    participant RepositoryRepository
-    participant UserRepository
-
-    User->>+RepositoryController: リポジトリ作成リクエスト
-    RepositoryController->>+RepositoryService: リポジトリ作成リクエスト
-    RepositoryService->>+RepositoryRepository: リポジトリ作成リクエスト
-    RepositoryRepository->>+UserRepository: リポジトリ作成リクエスト
-    UserRepository->>-RepositoryRepository: リポジトリ作成レスポンス
-    RepositoryRepository->>-RepositoryService: リポジトリ作成レスポンス
-    RepositoryService->>-RepositoryController: リポジトリ作成レスポンス
-    RepositoryController->>-User: リポジトリ作成レスポンス
-```
-
-2. コントリビューターがバックログを追加する場合
-```mermaid
-sequenceDiagram
-    participant Contributor
-    participant BacklogController
-    participant BacklogService
-    participant BacklogRepository
-    participant RepositoryRepository
-    participant UserRepository
-
-    Contributor->>+BacklogController: RequestBacklogCreation
-    BacklogController->>+BacklogService: RequestBacklogCreation
-    BacklogService->>+BacklogRepository:
-```
-
 
 
 
