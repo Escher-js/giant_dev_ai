@@ -32,6 +32,7 @@ classDiagram
     Hypothesis "1" -- "*" Experiment : has
     Hypothesis "1" -- "*" Improvement : has
     Improvement "1" -- "*" ReExperiment : leads to
+```
 
 シーケンス図
 ```mermaid
@@ -52,3 +53,4 @@ sequenceDiagram
     Hypothesis->>Improvement: Have
     User->>ReExperiment: Conduct / Edit / Delete
     Improvement->>ReExperiment: Lead to
+```
