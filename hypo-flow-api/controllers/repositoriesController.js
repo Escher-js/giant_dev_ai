@@ -5,7 +5,13 @@ const db = require('../db');
 // ... その他の関数 ...
 
 exports.getAll = async (req, res) => {
-  // Your code to fetch all repositories from the database
+  try {
+    const result = await db.query('SELECT * FROM repositories');
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while fetching repositories.' });
+  }
 };
 
 exports.getById = async (req, res) => {

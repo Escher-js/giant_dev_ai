@@ -5,27 +5,28 @@ const RepositoryList = () => {
     const [repositories, setRepositories] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/repositories');
-                setRepositories(response.data);
-            } catch (error) {
-                console.error('Error fetching repositories:', error);
-            }
-        };
-
-        fetchData();
+        fetchRepositories();
     }, []);
+
+    const fetchRepositories = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/repositories`);
+            const data = await response.json();
+            setRepositories(data);
+        } catch (err) {
+            console.error(err);
+        }
+        console.log(repositories)
+    };
 
     return (
         <div>
-            <h1>リポジトリ一覧</h1>
-            {repositories.map((repo) => (
-                <div key={repo.id}>
-                    <h2>{repo.name}</h2>
-                    <p>{repo.description}</p>
-                </div>
-            ))}
+            <h2>リポジトリ一覧</h2>
+            <ul>
+                {repositories.map((repository) => (
+                    <li key={repository.id}>{repository.title}</li>
+                ))}
+            </ul>
         </div>
     );
 };

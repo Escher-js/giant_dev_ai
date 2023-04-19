@@ -32,3 +32,12 @@ app.post('/api/repositories', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while creating the repository.' });
     }
 });
+app.get('/api/repositories', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM repositories');
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
