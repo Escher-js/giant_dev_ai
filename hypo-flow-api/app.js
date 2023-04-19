@@ -1,9 +1,11 @@
 const express = require("express");
-const app = express();
+const cors = require("cors");
 const { Pool } = require("pg");
 const bodyParser = require("body-parser");
 
+const app = express();
 app.use(express.json());
+app.use(cors());
 
 const repositoriesRouter = require('./routes/repositories');
 // const hypothesesRouter = require('./routes/hypotheses');

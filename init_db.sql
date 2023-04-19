@@ -1,10 +1,12 @@
 -- repositories table
 CREATE TABLE IF NOT EXISTS repositories (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description TEXT,
-  owner_id INTEGER
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
 
 -- hypotheses table
 CREATE TABLE IF NOT EXISTS hypotheses (
